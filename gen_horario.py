@@ -50,7 +50,7 @@ def generar_horario(usuario,actividades,horarios):
 """))
     doc.preamble.append(Command("CellHeight", "1.1cm"))
     doc.preamble.append(Command("CellWidth", "5cm"))
-    doc.preamble.append(Command("TimeRange", NoEscape(r"7:30-19:00")))
+    doc.preamble.append(Command("TimeRange", NoEscape(r"7:30-20:00")))
     doc.preamble.append(Command("SubUnits", "30"))
     doc.preamble.append(Command("BeginOn", "Monday"))
     doc.preamble.append(Command("TextSize", NoEscape(r"\small")))
@@ -85,13 +85,12 @@ def generar_horario(usuario,actividades,horarios):
     doc.append(Command("faEnvelope"))
     doc.append(HorizontalSpace("0.2cm"))
     doc.append(mail)
-    
+
     with doc.create(Schedule()) as sched:
 
         # Iterate through horarios
         for __, row in horarios.iterrows():
             codigo = row['codigo']
-            print(codigo)
             tipo = actividades[actividades['codigo'] == codigo]['tipo'].item()
             nombre = actividades[actividades['codigo'] == codigo]['nombre'].item()
             instancia = row['instancia']

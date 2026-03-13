@@ -15,9 +15,11 @@ def number_to_ordinals(number_str):
     return number_str 
 
 def analizar_horario(actividades, horarios):
+    horas_tot = 0
     for __,row in actividades.iterrows():
         codigo = row['codigo']
         horas = row['horas'] * row['instancias']
+        horas_tot += horas 
         for __,row in horarios.iterrows():
             if row['codigo'] == codigo:
                 instancia = row['instancia']
@@ -26,3 +28,5 @@ def analizar_horario(actividades, horarios):
             print(f"Actividad {codigo} tiene todas sus horas asignadas en el horario.")
         else:
             print(f"Actividad {codigo} tiene {horas} horas sin asignar en el horario.")
+    print(f"Horas totales: {horas_tot}")
+    
