@@ -1,0 +1,11 @@
+tipo,codigo,nombre,horas,instancias
+admin,CLIE,CLIE,5,1
+admin,ADMI,Labores administrativas,4,1
+admin,DELTA,Coordinación Delta,4,1
+curso,IF-3503,Instrumentación II,2,2
+curso,MI-4210,Lab. Control Eléctrico,2,1
+inves,1341030,"ASADAS-IoT: Desarrollo y transferencia de una plataforma tecnológica escalable, modular y abierta de para la ASADA de Paso Ancho, Oreamuno, Cartago",10,1
+inves,1341029,"Desarrollo de un sistema de monitoreo y alerta para la prevención de la exposición al calor en labores agrícolas: Aplicación en la zafra de la caña de azúcar",14,1
+inves,1460108,"Desarrollo de una plataforma tecnológica escalable y modular para el registro de variables físicas y químicas asociadas a la calidad y abundancia del agua potable.",2,1
+consu,CONS,Consulta,2,1
+desca,ALMS,Almuerzo,1,5

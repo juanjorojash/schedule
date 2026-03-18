@@ -14,13 +14,13 @@ def number_to_ordinals(number_str):
             number_str += r"\textsuperscript{no}"
     return number_str 
 
-def analizar_horario(actividades, horarios):
+def analyze_schedule(activities, schedules):
     horas_tot = 0
-    for __,row in actividades.iterrows():
+    for __, row in activities.iterrows():
         codigo = row['codigo']
         horas = row['horas'] * row['instancias']
         horas_tot += horas 
-        for __,row in horarios.iterrows():
+        for __, row in schedules.iterrows():
             if row['codigo'] == codigo:
                 instancia = row['instancia']
                 horas = horas - row['horas']

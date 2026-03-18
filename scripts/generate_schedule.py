@@ -19,7 +19,7 @@ SRC = BASE / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from horario import funciones as fun  # noqa: E402
+from schedule import helpers as fun  # noqa: E402
 
 DATA_DIR = BASE / "data" / "input"
 OUTPUT_PDF_DIR = BASE / "output" / "pdf"
@@ -34,7 +34,7 @@ class Schedule(Environment):
 
 
 
-def generar_horario(usuario, actividades, horarios):
+def generate_schedule(user_df, activities_df, schedules_df):
     OUTPUT_PDF_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_TEX_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -81,12 +81,12 @@ def generar_horario(usuario, actividades, horarios):
     doc.preamble.append(Command("NewAppointment", ["libre", "dark", "black"]))
     doc.preamble.append(Command("NewAppointment", ["desca", "teal!20!white", "black"]))
 
-    sem = str(usuario["semestre"].item())
-    año = usuario["año"].item()
+    sem = str(user_df["semestre"].item())
+    año = user_df["año"].item()
     doc.change_page_style("empty")
-    titulo = usuario["titulo"].item()
-    nombre = usuario["nombre"].item()
-    mail = usuario["mail"].item()
+    titulo = user_df["titulo"].item()
+    nombre = user_df["nombre"].item()
+    mail = user_df["mail"].item()
     doc.append(Command("centering"))
     doc.append(NoEscape(f"\\large Horario del {fun.number_to_ordinals(sem)} semestre, {año}"))
     doc.append(Command("par"))
@@ -103,10 +103,10 @@ def generar_horario(usuario, actividades, horarios):
     doc.append(mail)
 
     with doc.create(Schedule()) as sched:
-        for __, row in horarios.iterrows():
+        for __, row in schedules_df.iterrows():
             codigo = row["codigo"]
-            tipo = actividades[actividades["codigo"] == codigo]["tipo"].item()
-            nombre = actividades[actividades["codigo"] == codigo]["nombre"].item()
+            tipo = activities_df[activities_df["codigo"] == codigo]["tipo"].item()
+            nombre = activities_df[activities_df["codigo"] == codigo]["nombre"].item()
             instancia = row["instancia"]
             dia = row["día"]
             inicio = row["inicio"]
@@ -144,7 +144,7 @@ def generar_horario(usuario, actividades, horarios):
     doc.append(Command("par"))
     doc.append(Command("raggedright"))
     doc.append(Command("footnotesize"))
-    for __, row in actividades.iterrows():
+    for __, row in activities_df.iterrows():
         if row["tipo"] == "inves":
             codigo = row["codigo"]
             nombre = row["nombre"]
@@ -155,7 +155,7 @@ def generar_horario(usuario, actividades, horarios):
             doc.append(VerticalSpace("0.2cm"))
             doc.append(NewLine())
 
-    output_base = OUTPUT_PDF_DIR / f"Horario-{sem}-{año}"
+    output_base = OUTPUT_PDF_DIR / f"Schedule-{sem}-{año}"
     doc.generate_pdf(str(output_base), clean=True, clean_tex=False, compiler="lualatex")
 
     generated_tex = output_base.with_suffix(".tex")
@@ -165,8 +165,8 @@ def generar_horario(usuario, actividades, horarios):
 
 
 if __name__ == "__main__":
-    activ = pd.read_csv(DATA_DIR / "actividades.csv")
-    horar = pd.read_csv(DATA_DIR / "horarios.csv")
-    usuar = pd.read_csv(DATA_DIR / "usuario.csv")
-    fun.analizar_horario(activ, horar)
-    generar_horario(usuar, activ, horar)
+    activities = pd.read_csv(DATA_DIR / "activities.csv")
+    schedules = pd.read_csv(DATA_DIR / "schedules.csv")
+    user_df = pd.read_csv(DATA_DIR / "user.csv")
+    fun.analyze_schedule(activities, schedules)
+    generate_schedule(user_df, activities, schedules)

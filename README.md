@@ -4,8 +4,8 @@ Genera un horario en LaTeX/PDF usando PyLaTeX.
 
 ## Estructura
 
-- `scripts/generar_horario.py` — script principal
-- `src/horario/funciones.py` — funciones auxiliares
+- `scripts/generate_schedule.py` — script principal
+- `src/schedule/helpers.py` — funciones auxiliares
 - `data/input/` — archivos CSV de entrada
 - `output/pdf/` — PDFs generados
 - `output/tex/` — archivos `.tex` generados
@@ -13,11 +13,11 @@ Genera un horario en LaTeX/PDF usando PyLaTeX.
 ## Uso
 
 ```bash
-python scripts/generar_horario.py
+python scripts/generate_schedule.py
 ```
 
 ## Entradas
 
-- `data/input/actividades.csv`
-- `data/input/horarios.csv`
-- `data/input/usuario.csv`
+- `data/input/activities.csv`
+- `data/input/schedules.csv`
+- `data/input/user.csv`
