@@ -114,7 +114,7 @@ def generate_schedule(user_df, activities_df, schedules_df):
             ubicacion = row["ubicación"]
             if pd.isna(ubicacion):
                 ubicacion = ""
-            tiempo = f"{inicio}-{(pd.to_datetime(inicio) + pd.Timedelta(hours=int(horas))).strftime('%H:%M')}"
+            tiempo = f"{inicio}-{(pd.to_datetime(inicio) + pd.Timedelta(hours=float(horas))).strftime('%H:%M')}"
 
             match tipo:
                 case "curso":
